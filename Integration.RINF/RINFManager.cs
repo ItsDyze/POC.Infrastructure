@@ -5,12 +5,12 @@ using Newtonsoft.Json;
 
 namespace Integration.RINF;
 
-public class RINFManager:IRINFManager
+public class RINFManager : IRINFManager
 {
-    private RINFConfiguration _config;
-    private HttpClient _client;
+    private readonly RINFConfiguration _config;
+    private readonly HttpClient _client;
 
-    private string? _token;
+    private bool _authenticated;
     
     public RINFManager(RINFConfiguration config)
     {
@@ -18,50 +18,50 @@ public class RINFManager:IRINFManager
         _client = new HttpClient();
     }
 
-    public async Task<IEnumerable<BorderPoint>> GetBorderPointsAsync()
+    public async Task<IList<BorderPoint>> GetBorderPointsAsync()
     {
-        if (_token == null)
+        if (!_authenticated)
         {
             await SetToken();
         }
         
-        HttpResponseMessage httpResponse = await _client.GetAsync(_config.BaseUrl + "/BorderPoints$top=5");
+        var httpResponse = await _client.GetAsync(_config.BaseUrl + "/BorderPoints?$top=5");
         httpResponse.EnsureSuccessStatusCode();
-        string body = await httpResponse.Content.ReadAsStringAsync();
+        var body = await httpResponse.Content.ReadAsStringAsync();
         
-        return JsonConvert.DeserializeObject<QueryWrapper<IEnumerable<BorderPoint>>>(body)?.Value ?? Enumerable.Empty<BorderPoint>();
+        return JsonConvert.DeserializeObject<QueryWrapper<IList<BorderPoint>>>(body)?.Value ?? [];
     }
     
-    public async Task<IEnumerable<OperationalPoint>> GetOperationalPointsAsync()
+    public async Task<IList<OperationalPoint>> GetOperationalPointsAsync()
     {
-        if (_token == null)
+        if (!_authenticated)
         {
             await SetToken();
         }
         
-        HttpResponseMessage httpResponse = await _client.GetAsync(_config.BaseUrl + "/OperationalPoints?$top=5");
+        var httpResponse = await _client.GetAsync(_config.BaseUrl + "/OperationalPoints?$top=5");
         httpResponse.EnsureSuccessStatusCode();
-        string body = await httpResponse.Content.ReadAsStringAsync();
+        var body = await httpResponse.Content.ReadAsStringAsync();
         
-        return JsonConvert.DeserializeObject<QueryWrapper<IEnumerable<OperationalPoint>>>(body)?.Value ?? Enumerable.Empty<OperationalPoint>();
+        return JsonConvert.DeserializeObject<QueryWrapper<IList<OperationalPoint>>>(body)?.Value ?? [];
     }
 
-    public async Task<IEnumerable<SectionOfLine>> GetSectionsOfLineAsync()
+    public async Task<IList<SectionOfLine>> GetSectionsOfLineAsync()
     {
-        if (_token == null)
+        if (!_authenticated)
         {
             await SetToken();
         }
         
-        HttpResponseMessage httpResponse = await _client.GetAsync(_config.BaseUrl + "/SectionsOfLine?$top=5");
+        var httpResponse = await _client.GetAsync(_config.BaseUrl + "/SectionsOfLine?$top=5");
         httpResponse.EnsureSuccessStatusCode();
-        string body = await httpResponse.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<QueryWrapper<IEnumerable<SectionOfLine>>>(body)?.Value ?? Enumerable.Empty<SectionOfLine>();
+        var body = await httpResponse.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<QueryWrapper<IList<SectionOfLine>>>(body)?.Value ?? [];
     }
 
     private async Task SetToken()
     {
-        HttpResponseMessage httpResponse = await _client.PostAsync(_config.BaseUrl + "/token", new FormUrlEncodedContent(new []
+        var httpResponse = await _client.PostAsync(_config.BaseUrl + "/token", new FormUrlEncodedContent(new []
         {
             new KeyValuePair<string, string>("grant_type", "password"),
             new KeyValuePair<string, string>("username", _config.User),
@@ -69,10 +69,15 @@ public class RINFManager:IRINFManager
         }));
         
         httpResponse.EnsureSuccessStatusCode();
-        string body = await httpResponse.Content.ReadAsStringAsync();
-        GetTokenResponse parsedBody = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+        var body = await httpResponse.Content.ReadAsStringAsync();
+        var parsedBody = JsonConvert.DeserializeObject<GetTokenResponse>(body);
+
+        if (parsedBody is null || string.IsNullOrWhiteSpace(parsedBody.AccessToken))
+        {
+            throw new ApplicationException("Token is empty despite successful authentication!");
+        }
         
-        _token = parsedBody.AccessToken;
-        _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_token}");
+        _authenticated = true;
+        _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {parsedBody.AccessToken}");
     }
 }

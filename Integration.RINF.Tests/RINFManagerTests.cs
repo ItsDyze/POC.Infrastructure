@@ -1,23 +1,20 @@
 using Integration.RINF.Models;
-using NuGet.Frameworks;
+using Microsoft.Extensions.Configuration;
 
 namespace Integration.RINF.Tests;
 
 public class RINFManagerTests
 {
-    private RINFConfiguration _configuration;
     private RINFManager _manager;
     
     [SetUp]
     public void Setup()
     {
-        _configuration = new RINFConfiguration(
-            Environment.GetEnvironmentVariable("RINF_User"),
-            Environment.GetEnvironmentVariable("RINF_Password"),
-            Environment.GetEnvironmentVariable("RINF_BaseUrl")
-        );
-        
-        _manager = new RINFManager(_configuration);
+        var builder = new ConfigurationBuilder().AddUserSecrets<RINFManagerTests>();
+        var config = builder.Build();
+        var rinfConfiguration = config.GetSection("RINFConfiguration").Get<RINFConfiguration>() ??
+                                throw new ApplicationException("Missing configuration, check your user secrets.");
+        _manager = new RINFManager(rinfConfiguration);
     }
 
     [Test]
@@ -25,9 +22,9 @@ public class RINFManagerTests
     {
         var borderPoints = await _manager.GetBorderPointsAsync();
         
-        Assert.IsNotNull(borderPoints);
-        Assert.IsNotEmpty(borderPoints);
-        Assert.IsTrue(borderPoints.FirstOrDefault() is BorderPoint);
+        Assert.That(borderPoints, Is.Not.Null);
+        Assert.That(borderPoints, Is.Not.Empty);
+        Assert.That(borderPoints[0], Is.InstanceOf<BorderPoint>());
     }
     
     [Test]
@@ -35,9 +32,9 @@ public class RINFManagerTests
     {
         var sectionsOfLine = await _manager.GetSectionsOfLineAsync();
         
-        Assert.IsNotNull(sectionsOfLine);
-        Assert.IsNotEmpty(sectionsOfLine);
-        Assert.IsTrue(sectionsOfLine.FirstOrDefault() is SectionOfLine);
+        Assert.That(sectionsOfLine, Is.Not.Null);
+        Assert.That(sectionsOfLine, Is.Not.Empty);
+        Assert.That(sectionsOfLine[0], Is.InstanceOf<SectionOfLine>());
     }
     
     [Test]
@@ -45,8 +42,8 @@ public class RINFManagerTests
     {
         var operationalPoints = await _manager.GetOperationalPointsAsync();
         
-        Assert.IsNotNull(operationalPoints);
-        Assert.IsNotEmpty(operationalPoints);
-        Assert.IsTrue(operationalPoints.FirstOrDefault() is OperationalPoint);
+        Assert.That(operationalPoints, Is.Not.Null);
+        Assert.That(operationalPoints, Is.Not.Empty);
+        Assert.That(operationalPoints[0], Is.InstanceOf<OperationalPoint>());
     }
 }
