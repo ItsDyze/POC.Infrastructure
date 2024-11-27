@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration.RINF", "Integra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Integration.RINF.Tests", "Integration.RINF.Tests\Integration.RINF.Tests.csproj", "{FDC69896-B22B-4C46-B641-5A0AB48B5048}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStarCrawler", "AStarCrawler\AStarCrawler.csproj", "{C971AEC1-9F3C-4CAA-9846-048772EC72AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AStarCrawler.Tests", "AStarCrawler.Tests\AStarCrawler.Tests.csproj", "{78923E9E-39A0-44EB-B991-3BDEB5BF444B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{FDC69896-B22B-4C46-B641-5A0AB48B5048}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDC69896-B22B-4C46-B641-5A0AB48B5048}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDC69896-B22B-4C46-B641-5A0AB48B5048}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C971AEC1-9F3C-4CAA-9846-048772EC72AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C971AEC1-9F3C-4CAA-9846-048772EC72AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C971AEC1-9F3C-4CAA-9846-048772EC72AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C971AEC1-9F3C-4CAA-9846-048772EC72AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78923E9E-39A0-44EB-B991-3BDEB5BF444B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78923E9E-39A0-44EB-B991-3BDEB5BF444B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78923E9E-39A0-44EB-B991-3BDEB5BF444B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78923E9E-39A0-44EB-B991-3BDEB5BF444B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
