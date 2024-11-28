@@ -16,6 +16,8 @@ public class RINFManager : IRINFManager
     {
         _config = config;
         _client = new HttpClient();
+        
+        //_client.DefaultRequestHeaders.Add("Accept", "application/json;odata.metadata=full");
     }
 
     public async Task<IList<BorderPoint>> GetBorderPointsAsync()
@@ -39,7 +41,7 @@ public class RINFManager : IRINFManager
             await SetToken();
         }
         
-        var httpResponse = await _client.GetAsync(_config.BaseUrl + "/OperationalPoints?$top=5");
+        var httpResponse = await _client.GetAsync(_config.BaseUrl + "/OperationalPoints?$top=5&$filter=Country eq 'Luxembourg'&$expand=TafTapCodes");
         httpResponse.EnsureSuccessStatusCode();
         var body = await httpResponse.Content.ReadAsStringAsync();
         
@@ -53,7 +55,7 @@ public class RINFManager : IRINFManager
             await SetToken();
         }
         
-        var httpResponse = await _client.GetAsync(_config.BaseUrl + "/SectionsOfLine?$top=5");
+        var httpResponse = await _client.GetAsync(_config.BaseUrl + "/SectionsOfLine?$top=5&$filter=Country eq 'Luxembourg'&$expand=StartOP,EndOP");
         httpResponse.EnsureSuccessStatusCode();
         var body = await httpResponse.Content.ReadAsStringAsync();
         return JsonConvert.DeserializeObject<QueryWrapper<IList<SectionOfLine>>>(body)?.Value ?? [];
