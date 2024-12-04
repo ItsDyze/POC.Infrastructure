@@ -1,20 +1,21 @@
 using Integration.RINF.Models;
+using Integration.RINF.Services;
 using Microsoft.Extensions.Configuration;
 
 namespace Integration.RINF.Tests;
 
-public class RINFManagerTests
+public class RINFServiceTests
 {
-    private RINFManager _manager;
+    private RINFService _manager;
     
     [SetUp]
     public void Setup()
     {
-        var builder = new ConfigurationBuilder().AddUserSecrets<RINFManagerTests>();
+        var builder = new ConfigurationBuilder().AddUserSecrets<RINFServiceTests>();
         var config = builder.Build();
         var rinfConfiguration = config.GetSection("RINFConfiguration").Get<RINFConfiguration>() ??
                                 throw new ApplicationException("Missing configuration, check your user secrets.");
-        _manager = new RINFManager(rinfConfiguration);
+        _manager = new RINFService(rinfConfiguration);
     }
 
     [Test]

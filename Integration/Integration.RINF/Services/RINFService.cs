@@ -3,16 +3,16 @@ using Integration.RINF.Interfaces;
 using Integration.RINF.Models;
 using Newtonsoft.Json;
 
-namespace Integration.RINF;
+namespace Integration.RINF.Services;
 
-public class RINFManager : IRINFManager
+public class RINFService : IRINFService
 {
     private readonly RINFConfiguration _config;
     private readonly HttpClient _client;
 
     private bool _authenticated;
     
-    public RINFManager(RINFConfiguration config)
+    public RINFService(RINFConfiguration config)
     {
         _config = config;
         _client = new HttpClient();

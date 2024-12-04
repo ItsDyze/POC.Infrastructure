@@ -4,11 +4,6 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <UserSecretsId>df4267bf-230b-4be6-a6e2-ec4783f4b3ce</UserSecretsId>
     </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    </ItemGroup>
 
 </Project>

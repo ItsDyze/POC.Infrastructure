@@ -2,7 +2,7 @@
 
 namespace Integration.RINF.Interfaces;
 
-public interface IRINFManager
+public interface IRINFService
 {
     public Task<IList<BorderPoint>> GetBorderPointsAsync();
     public Task<IList<OperationalPoint>> GetOperationalPointsAsync();

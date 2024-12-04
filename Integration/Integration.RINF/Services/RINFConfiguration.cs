@@ -1,4 +1,4 @@
-﻿namespace Integration.RINF;
+﻿namespace Integration.RINF.Services;
 
 public class RINFConfiguration(string user, string password, string baseUrl, string? tempStorage = null)
 {

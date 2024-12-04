@@ -1,0 +1,6 @@
+@Integration.RINF_HostAddress = http://localhost:5216
+
+GET {{Integration.RINF_HostAddress}}/operational-points
+Accept: application/json
+
+###

@@ -1,0 +1,8 @@
+﻿services:
+  integration.rinf:
+    image: integration.rinf
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8180:8080"
