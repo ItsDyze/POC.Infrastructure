@@ -25,7 +25,7 @@ public class RINFServiceTests
         
         Assert.That(borderPoints, Is.Not.Null);
         Assert.That(borderPoints, Is.Not.Empty);
-        Assert.That(borderPoints[0], Is.InstanceOf<BorderPoint>());
+        Assert.That(borderPoints[0], Is.InstanceOf<BorderPointModel>());
     }
     
     [Test]
@@ -35,7 +35,7 @@ public class RINFServiceTests
         
         Assert.That(sectionsOfLine, Is.Not.Null);
         Assert.That(sectionsOfLine, Is.Not.Empty);
-        Assert.That(sectionsOfLine[0], Is.InstanceOf<SectionOfLine>());
+        Assert.That(sectionsOfLine[0], Is.InstanceOf<SectionOfLineModel>());
     }
     
     [Test]
@@ -45,6 +45,6 @@ public class RINFServiceTests
         
         Assert.That(operationalPoints, Is.Not.Null);
         Assert.That(operationalPoints, Is.Not.Empty);
-        Assert.That(operationalPoints[0], Is.InstanceOf<OperationalPoint>());
+        Assert.That(operationalPoints[0], Is.InstanceOf<OperationalPointModel>());
     }
 }

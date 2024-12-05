@@ -2,7 +2,7 @@
 
 namespace Integration.RINF.Models;
 
-public class TAFTAPCodes
+public class TAFTAPCodesModel
 {
     [JsonProperty(PropertyName = "Value")]
     public required string PLC { get; set; }

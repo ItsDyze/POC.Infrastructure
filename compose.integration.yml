@@ -1,0 +1,32 @@
+﻿include: 
+  - compose.rabbitmq.yml
+
+services:
+  integration.rinf:
+    image: integration.rinf
+    build:
+      context: ./Integration/Integration.RINF/
+      dockerfile: Dockerfile
+    ports:
+      - "8180:8080"
+    depends_on:
+      - mongodb
+    environment:
+      - MongoDB__ConnectionString=mongodb+srv://dev:dev@mongodb:27017
+      - MongoDB__DatabaseName=Integration_RINF
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: dev
+      MONGO_INITDB_ROOT_DATABASE: root_db
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_integration_data:/data/db
+
+volumes:
+  mongodb_integration_data:

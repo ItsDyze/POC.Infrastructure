@@ -1,4 +1,5 @@
-﻿using Integration.RINF.Models;
+﻿using Integration.RINF.Entities;
+using Integration.RINF.Models;
 
 namespace Integration.RINF.Interfaces;
 

@@ -4,7 +4,7 @@ namespace Integration.RINF.Interfaces;
 
 public interface IRINFService
 {
-    public Task<IList<BorderPoint>> GetBorderPointsAsync();
-    public Task<IList<OperationalPoint>> GetOperationalPointsAsync();
-    public Task<IList<SectionOfLine>> GetSectionsOfLineAsync();
+    public Task<IList<BorderPointModel>> GetBorderPointsAsync();
+    public Task<IList<OperationalPointModel>> GetOperationalPointsAsync();
+    public Task<IList<SectionOfLineModel>> GetSectionsOfLineAsync();
 }

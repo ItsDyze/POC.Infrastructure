@@ -1,6 +1,8 @@
 using Integration.RINF.Controllers;
+using Integration.RINF.Entities;
 using Integration.RINF.Interfaces;
 using Integration.RINF.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var configBuilder = new ConfigurationBuilder().AddUserSecrets<Program>();
@@ -10,6 +12,8 @@ var config = configBuilder.Build();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<IntegrationDbContext>(options => options.UseMongoDB(builder.Configuration["MongoDB:ConnectionString"] ?? throw new Exception("Check docker compose"), builder.Configuration["MongoDB:DatabaseName"] ?? throw new Exception("Check docker compose")));
 
 builder.Services.AddSingleton<IRINFService, RINFService>();
 builder.Services.AddSingleton<IOperationalPointsService, OperationalPointsService>();

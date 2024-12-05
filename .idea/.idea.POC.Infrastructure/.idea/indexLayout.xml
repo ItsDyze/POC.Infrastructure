@@ -2,7 +2,16 @@
 <project version="4">
   <component name="UserContentModel">
     <attachedFolders />
-    <explicitIncludes />
-    <explicitExcludes />
+    <explicitIncludes>
+      <Path>.git</Path>
+      <Path>.gitignore</Path>
+      <Path>.idea</Path>
+      <Path>Environment</Path>
+      <Path>POC.Infrastructure.sln.DotSettings</Path>
+      <Path>POC.Infrastructure.sln.DotSettings.user</Path>
+    </explicitIncludes>
+    <explicitExcludes>
+      <Path>Libraries/AStarCrawler</Path>
+    </explicitExcludes>
   </component>
 </project>

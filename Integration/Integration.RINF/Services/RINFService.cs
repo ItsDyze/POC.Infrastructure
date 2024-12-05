@@ -20,7 +20,7 @@ public class RINFService : IRINFService
         //_client.DefaultRequestHeaders.Add("Accept", "application/json;odata.metadata=full");
     }
 
-    public async Task<IList<BorderPoint>> GetBorderPointsAsync()
+    public async Task<IList<BorderPointModel>> GetBorderPointsAsync()
     {
         if (!_authenticated)
         {
@@ -31,10 +31,10 @@ public class RINFService : IRINFService
         httpResponse.EnsureSuccessStatusCode();
         var body = await httpResponse.Content.ReadAsStringAsync();
         
-        return JsonConvert.DeserializeObject<QueryWrapper<IList<BorderPoint>>>(body)?.Value ?? [];
+        return JsonConvert.DeserializeObject<QueryWrapper<IList<BorderPointModel>>>(body)?.Value ?? [];
     }
     
-    public async Task<IList<OperationalPoint>> GetOperationalPointsAsync()
+    public async Task<IList<OperationalPointModel>> GetOperationalPointsAsync()
     {
         if (!_authenticated)
         {
@@ -45,10 +45,10 @@ public class RINFService : IRINFService
         httpResponse.EnsureSuccessStatusCode();
         var body = await httpResponse.Content.ReadAsStringAsync();
         
-        return JsonConvert.DeserializeObject<QueryWrapper<IList<OperationalPoint>>>(body)?.Value ?? [];
+        return JsonConvert.DeserializeObject<QueryWrapper<IList<OperationalPointModel>>>(body)?.Value ?? [];
     }
 
-    public async Task<IList<SectionOfLine>> GetSectionsOfLineAsync()
+    public async Task<IList<SectionOfLineModel>> GetSectionsOfLineAsync()
     {
         if (!_authenticated)
         {
@@ -58,7 +58,7 @@ public class RINFService : IRINFService
         var httpResponse = await _client.GetAsync(_config.BaseUrl + "/SectionsOfLine?$top=5&$filter=Country eq 'Luxembourg'&$expand=StartOP,EndOP");
         httpResponse.EnsureSuccessStatusCode();
         var body = await httpResponse.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<QueryWrapper<IList<SectionOfLine>>>(body)?.Value ?? [];
+        return JsonConvert.DeserializeObject<QueryWrapper<IList<SectionOfLineModel>>>(body)?.Value ?? [];
     }
 
     private async Task SetToken()
